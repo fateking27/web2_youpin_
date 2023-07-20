@@ -1,12 +1,19 @@
 // 引入Vue，才能创建Vue实例
 import Vue from 'vue'
 
+import axios from 'axios'
+
 // 当前引入的，需要进行渲染的组件
 // import App from './App.vue'
 // 将路径修改为你当前想要渲染的组件的路径
 // @ 代表src
 // import App from '@/components/day1/01-单文件组件的体验.vue'
-import App from '@/components/day1/02-插值表达式.vue'
+// import App from '@/components/day1/02-插值表达式.vue'
+// import App from '@/components/day1/03-v-text.vue'
+// import App from '@/components/day1/04-v-html.vue'
+// import App from '@/components/day1/05-案例-电影详情.vue'
+// import App from '@/components/day1/06-v-for的使用.vue'
+import App from './components/day1/07-v-for时key的作用.vue'
 
 // 如果这个包整个项目都需要使用，那么就可以在main.js中进行全局引入--只需要引入一次
 import 'normalize.css'
