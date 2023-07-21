@@ -1,7 +1,7 @@
 // 引入Vue，才能创建Vue实例
 import Vue from 'vue'
 
-import axios from 'axios'
+// import axios from 'axios'
 
 // 当前引入的，需要进行渲染的组件
 // import App from './App.vue'
@@ -25,7 +25,10 @@ import axios from 'axios'
 // import App from './components/day1/16-登陆.vue'
 // import App from './components/day1/17-v-on的事件修饰符.vue'
 // import App from './components/day1/18-v-else和v-else-if.vue'
-import App from './components/day2/01-ref的使用场景.vue'
+// import App from './components/day2/01-ref的使用场景.vue'
+// import App from './components/day2/02-自定义局部过滤器.vue'
+// import App from './components/day2/03-自定义全局过滤器.vue'
+import App from './components/day2/04-计算属性的初步使用.vue'
 
 // 如果这个包整个项目都需要使用，那么就可以在main.js中进行全局引入--只需要引入一次
 import 'normalize.css'

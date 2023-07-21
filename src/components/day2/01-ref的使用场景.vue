@@ -3,11 +3,18 @@
     <button @click='show'>显示输入框</button>
     <input v-if='isshow'
            ref='username' />
+    <!-- 使用组件：将组件当成标签使用 -->
+    <mycom></mycom>
   </div>
 </template>
 <script>
+import mycom from './03-自定义全局过滤器.vue'
 export default {
   name: '',
+  // 通过components选项进行组件的注册
+  components: {
+    mycom
+  },
   data () {
     return {
       isshow: false
@@ -26,7 +33,7 @@ export default {
         this.$refs.username.focus()
       })
     }
-  }
+  },
 }
 </script>
 <style lang='less' scoped>

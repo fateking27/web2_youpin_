@@ -33,7 +33,7 @@
             <td>{{v.brandName}}</td>
             <!-- 调用过滤器的时候，会默认将管道符前面的数据做为参数传递 -->
             <!-- 不管你是否传递了参数，都不会影响默认参数的传递 -->
-            <td>{{v.date | dateFormat('-') | dateJoinStr}}</td>
+            <td>{{v.date | dateFormat('-')}}</td>
             <td :class='{red:v.price > 10000}'>{{v.price}}</td>
             <td>
               <img :src='v.img'>
@@ -57,6 +57,10 @@
   </div>
 </template>
 <script>
+// 引入全局过滤器文件中的某个成员
+// 默认导出成员，直接接收
+// 非默认导出的成员，需要使用解构方式接收
+import { dateFormat } from '@/utils/commonFilters.js'
 export default {
   // 定义数据
   data () {
@@ -97,20 +101,8 @@ export default {
       return total
     }
   },
-
-  // 添加局部过滤器:只有当前组件可以使用
   filters: {
-    // 用户参数是从参数列表的第二个开始
-    dateFormat: function (value, spe) {
-      let date = new Date(value)
-      let year = date.getFullYear()
-      let month = date.getMonth() + 1
-      let day = date.getDate()
-      return `${year}${spe}${month}${spe}${day}`
-    },
-    dateJoinStr (value) {
-      return '当前值为' + value
-    }
+    dateFormat
   }
 }
 </script>

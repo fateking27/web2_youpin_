@@ -33,7 +33,7 @@
             <td>{{v.brandName}}</td>
             <!-- 调用过滤器的时候，会默认将管道符前面的数据做为参数传递 -->
             <!-- 不管你是否传递了参数，都不会影响默认参数的传递 -->
-            <td>{{v.date | dateFormat('-') | dateJoinStr}}</td>
+            <td>{{v.date | dateFormat('-')}}</td>
             <td :class='{red:v.price > 10000}'>{{v.price}}</td>
             <td>
               <img :src='v.img'>
@@ -46,7 +46,14 @@
           </tr>
           <tr>
             <td>总价:</td>
-            <td colspan='5'>{{getTotalPrice()}}</td>
+            <!-- 在使用计算属性的时候，要像使用data中声明的属性一样使用计算属性
+            看起来像函数，用起来是属性 -->
+            <td colspan=''>{{getTotalPrice}}</td>
+            <td colspan=''>{{getTotalPrice}}</td>
+            <td colspan=''>{{getTotalPrice}}</td>
+            <td colspan=''>{{getTotalPrice}}</td>
+            <td colspan=''>{{getTotalPrice}}</td>
+            <td colspan=''>{{getTotalPrice}}</td>
           </tr>
           <tr v-if='brandList.length == 0'>
             <td colspan='6'>没有数据，请先添加</td>
@@ -57,6 +64,10 @@
   </div>
 </template>
 <script>
+// 引入全局过滤器文件中的某个成员
+// 默认导出成员，直接接收
+// 非默认导出的成员，需要使用解构方式接收
+import { dateFormat } from '@/utils/commonFilters.js'
 export default {
   // 定义数据
   data () {
@@ -89,27 +100,30 @@ export default {
       // 现在： 双向绑定  》》 添加到数组  》》 ...
       this.brandList.push({ ...this.newBrand })
     },
+    // getTotalPrice () {
+    //   console.log('调用了这个方法');
+
+    //   let total = 0
+    //   this.brandList.forEach(v => {
+    //     total += v.price
+    //   })
+    //   return total
+    // }
+  },
+  filters: {
+    dateFormat
+  },
+  // 添加计算属性
+  computed: {
+    // 计算属性的成员需要进行业务处理，所以是函数形式
+    //  只要计算属性中使用的this的成员发生了变化，就会重新触发计算属性，相当于它可以侦听指定的属性值的变化，从而进行相应的处理
     getTotalPrice () {
+      console.log('调用了这个计算属性');
       let total = 0
       this.brandList.forEach(v => {
         total += v.price
       })
       return total
-    }
-  },
-
-  // 添加局部过滤器:只有当前组件可以使用
-  filters: {
-    // 用户参数是从参数列表的第二个开始
-    dateFormat: function (value, spe) {
-      let date = new Date(value)
-      let year = date.getFullYear()
-      let month = date.getMonth() + 1
-      let day = date.getDate()
-      return `${year}${spe}${month}${spe}${day}`
-    },
-    dateJoinStr (value) {
-      return '当前值为' + value
     }
   }
 }
