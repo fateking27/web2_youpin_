@@ -35,12 +35,12 @@
         </p>
         <h3 class="text-danger">精彩短评</h3>
         <div class="discuzs">
-
           <div class="media"
-               v-for='item in commentList' :key='item.id'>
+               v-for='item in commentList'
+               :key='item.id'>
             <a href="javascript:;"
                class="pull-left"><img width="100"
-                   src="http://127.0.0.1:9000/images/default.jpg"
+                   :src="'http://127.0.0.1:9000'+item.memberInfo.avatar"
                    class="media-object"
                    alt=""></a>
             <div class="media-body">
@@ -83,7 +83,7 @@ export default {
 
     // 获取当前电影的评论
     let resMovieComments = await axios({
-      url: 'http://127.0.0.1:9000/api/v1/member/commentList?movieId=5deca10c55a2f01c30adf1f9&size=5'
+      url: 'http://127.0.0.1:9000/api/v1/member/commentList?movieId=5deca10c55a2f01c30adf1f9&size=10'
     })
     this.commentList = resMovieComments.data.result.commentList
     console.log(this.commentList);
