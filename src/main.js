@@ -1,6 +1,18 @@
 // 引入Vue，才能创建Vue实例
 import Vue from 'vue'
 
+// Vue.directive('color', {
+//   inserted(el, binding) {
+//     el.style.color = binding.value
+//   }
+// })
+
+// Vue.directive('focus', {
+//   inserted(el) {
+//     el.focus()
+//   }
+// })
+
 // import axios from 'axios'
 
 // 当前引入的，需要进行渲染的组件
@@ -38,7 +50,8 @@ import Vue from 'vue'
 // import App from './components/day2/11-watch侦听器.vue'
 // import App from './components/day2/12-watch侦听器-进阶用法.vue'
 // import App from './components/day2/13-watch运用-本地存储.vue'
-import App from './components/day2/14-自定义局部指令.vue'
+// import App from './components/day2/14-自定义局部指令.vue'
+import App from './components/day2/15-使用全局指令.vue'
 
 // 如果这个包整个项目都需要使用，那么就可以在main.js中进行全局引入--只需要引入一次
 import 'normalize.css'
