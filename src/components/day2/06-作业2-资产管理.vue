@@ -52,7 +52,8 @@
                    class="form-control"
                    placeholder="资产名称"
                    v-model.trim='
-                 obj.name' />
+                 obj.name'
+                   autofocus />
           </div>
         </div>
         &nbsp;&nbsp;&nbsp;&nbsp;
