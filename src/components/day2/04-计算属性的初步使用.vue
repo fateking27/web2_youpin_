@@ -48,18 +48,19 @@
             <td>总价:</td>
             <!-- 在使用计算属性的时候，要像使用data中声明的属性一样使用计算属性
             看起来像函数，用起来是属性 -->
-            <td colspan=''>{{getTotalPrice}}</td>
-            <td colspan=''>{{getTotalPrice}}</td>
-            <td colspan=''>{{getTotalPrice}}</td>
-            <td colspan=''>{{getTotalPrice}}</td>
-            <td colspan=''>{{getTotalPrice}}</td>
-            <td colspan=''>{{getTotalPrice}}</td>
+            <td colspan=''>{{getTotalPrice()}}</td>
+            <td colspan=''>{{getTotalPrice()}}</td>
+            <td colspan=''>{{getTotalPrice()}}</td>
+            <td colspan=''>{{getTotalPrice()}}</td>
+            <td colspan=''>{{getTotalPrice()}}</td>
+            <td colspan=''>{{getTotalPrice()}}</td>
           </tr>
           <tr v-if='brandList.length == 0'>
             <td colspan='6'>没有数据，请先添加</td>
           </tr>
         </tbody>
       </table>
+
     </div>
   </div>
 </template>
@@ -100,15 +101,15 @@ export default {
       // 现在： 双向绑定  》》 添加到数组  》》 ...
       this.brandList.push({ ...this.newBrand })
     },
-    // getTotalPrice () {
-    //   console.log('调用了这个方法');
+    getTotalPrice () {
+      console.log('调用了这个方法');
 
-    //   let total = 0
-    //   this.brandList.forEach(v => {
-    //     total += v.price
-    //   })
-    //   return total
-    // }
+      let total = 0
+      this.brandList.forEach(v => {
+        total += v.price
+      })
+      return total
+    }
   },
   filters: {
     dateFormat
@@ -117,14 +118,14 @@ export default {
   computed: {
     // 计算属性的成员需要进行业务处理，所以是函数形式
     //  只要计算属性中使用的this的成员发生了变化，就会重新触发计算属性，相当于它可以侦听指定的属性值的变化，从而进行相应的处理
-    getTotalPrice () {
-      console.log('调用了这个计算属性');
-      let total = 0
-      this.brandList.forEach(v => {
-        total += v.price
-      })
-      return total
-    }
+    // getTotalPrice () {
+    //   console.log('调用了这个计算属性');
+    //   let total = 0
+    //   this.brandList.forEach(v => {
+    //     total += v.price
+    //   })
+    //   return total
+    // }
   }
 }
 </script>

@@ -16,7 +16,7 @@ console.log('我运行了没有？')
 
 // 导出某个成员--可以导出多
 // export function dateFormat(){}
-export const dateFormat = function(value, spe) {
+export const dateFormat = function(value, spe='/') {
   let date = new Date(value)
   let year = date.getFullYear()
   let month = date.getMonth() + 1

@@ -28,11 +28,16 @@ import Vue from 'vue'
 // import App from './components/day2/01-ref的使用场景.vue'
 // import App from './components/day2/02-自定义局部过滤器.vue'
 // import App from './components/day2/03-自定义全局过滤器.vue'
-import App from './components/day2/04-计算属性的初步使用.vue'
+// import App from './components/day2/04-计算属性的初步使用.vue'
+// import App from './components/day2/05-作业1-买书.vue'
+// import App from './components/day2/06-作业2-资产管理.vue'
+// import App from './components/day2/07-全选案例-传统方式.vue'
+import App from './components/day2/08-计算属性的完整写法.vue'
 
 // 如果这个包整个项目都需要使用，那么就可以在main.js中进行全局引入--只需要引入一次
 import 'normalize.css'
 // import '@/styles/reset.less'
+import './styles/bootstrap.css'
 
 Vue.config.productionTip = false
 
