@@ -1,0 +1,7 @@
+// 模拟数据
+taskList: [
+  // task：任务名称  state:任务是否完成，true代码完成,false代表未完成
+  { id: 1, task: '周一早晨9点开会', state: false },
+  { id: 2, task: '周一晚上8点聚餐', state: true },
+  { id: 3, task: '准备周二演讲稿', state: false },
+],

@@ -4,9 +4,12 @@
     <h4>我这个月的生活费拿到了，为{{myMoney}}</h4>
     <h4>信用卡爆了，欠款{{needMoney}}</h4>
     <button @click='sendAcount'>单击我将账单传递给父组件</button>
+    <button @click='sendAcountTo'>单击我将账单传递给兄弟(姐姐)组件</button>
   </div>
 </template>
 <script>
+// 引入事件总线
+import bus from '@/utils/eventBus.js'
 export default {
   // 定义props用于接收父组件传递的数据
   // props如果格式为数组，里面的成员就是相当于定义在data中的变量的名称
@@ -48,7 +51,11 @@ export default {
     sendAcount () {
       // 使用this.$emit发出一个针对于父组件的事件
       // this.$emit('自定义的事件类型',你本次所需要传递的数据)
+      // this：当前组件实例 》》 是一个可复用的Vue实例
       this.$emit('payMoney', this.needMoney)
+    },
+    sendAcountTo () {
+      bus.$emit('helpme', this.needMoney)
     }
   }
 }
