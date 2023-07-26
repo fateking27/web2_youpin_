@@ -5,15 +5,18 @@
          success:type=="success",
          info:type=="info",
          danger:type=="danger"}'
-       @click='sublogin'>{{title}}</div>
+       @click='sublogin'>
+    <!-- 添加一个匿名插槽 -->
+    <slot></slot>
+  </div>
 </template>
 <script>
 export default {
   props: {
-    title: {
-      type: String,
-      default: '按钮'
-    },
+    // title: {
+    //   type: String,
+    //   default: '按钮'
+    // },
     type: {
       type: String
     }

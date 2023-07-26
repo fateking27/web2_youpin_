@@ -14,7 +14,8 @@ Vue.use(ElementUI)
 // import App from './components/day3/封装按钮/login.vue'
 // import App from './components/day4/axios的封装/login.vue'
 // import App from './components/day4/element-ui的使用/02-login.vue'
-import App from './components/day3/todo/todo_manager.vue'
+// import App from './components/day3/todo/todo_manager.vue'
+import App from './components/day4/购物车/cart.vue'
 
 // 如果这个包整个项目都需要使用，那么就可以在main.js中进行全局引入--只需要引入一次
 import 'normalize.css'
