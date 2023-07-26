@@ -1,10 +1,19 @@
 <template>
-  <div class="my-header"> 标题 </div>
+  <div class="my-header"
+       :style='{"background-color":bgcolor}'>
+    <!-- 添加匿名插槽:没有设置name属性的插槽就是匿名插槽 -->
+    <slot></slot>
+  </div>
 </template>
 
 <script>
 export default {
-
+  props: {
+    bgcolor: {
+      type: String,
+      default: '#ccc'
+    }
+  }
 }
 </script>
 

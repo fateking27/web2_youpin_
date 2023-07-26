@@ -1,17 +1,34 @@
 <template>
   <div class="my-counter">
     <button type="button"
-            class="btn btn-light">-</button>
+            class="btn btn-light"
+            @click='current.goods_count>1 && current.goods_count--'>-</button>
     <input type="number"
-           class="form-control inp">
+           class="form-control inp"
+           v-model='current.goods_count'
+           readonly>
     <button type="button"
-            class="btn btn-light">+</button>
+            class="btn btn-light"
+            @click='current.goods_count++'>+</button>
   </div>
 </template>
 
 <script>
 export default {
-
+  props: {
+    current: {
+      type: Object,
+      required: true
+    }
+  },
+  methods: {
+    // add () {
+    //   this.$emit('addCount')
+    // },
+    // sub () {
+    //   this.$emit('subCount')
+    // }
+  }
 }
 </script>
 
