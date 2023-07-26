@@ -15,7 +15,10 @@ Vue.use(ElementUI)
 // import App from './components/day4/axios的封装/login.vue'
 // import App from './components/day4/element-ui的使用/02-login.vue'
 // import App from './components/day3/todo/todo_manager.vue'
-import App from './components/day4/购物车/cart.vue'
+// import App from './components/day4/购物车/cart.vue'
+// import App from './components/day5/动态组件/parent.vue'
+// import App from './components/day5/插槽/02-使用匿名插槽.vue'
+import App from './components/day5/插槽/04-home页使用具名插槽.vue'
 
 // 如果这个包整个项目都需要使用，那么就可以在main.js中进行全局引入--只需要引入一次
 import 'normalize.css'
