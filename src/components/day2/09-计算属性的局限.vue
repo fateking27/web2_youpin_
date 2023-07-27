@@ -4,7 +4,7 @@
            v-model='first'>
     <hr>
     <p>{{getM}}--{{actors}}</p>
-    <button @click='getMovie()'>获取数据</button>
+    <!-- <button @click='getMovie()'>获取数据</button> -->
   </div>
 </template>
 
@@ -33,24 +33,22 @@ export default {
         url: 'http://127.0.0.1:9000/api/v1/movie/detail?movieId=5deca10c55a2f01c30adf1f9'
       }).then(res => {
         // console.log(resMovie);
-        // this.movie = res.data.result.movieInfo
-        this.actors = res.data.result.movieInfo.actors
-
+        this.movie = res.data.result.movieInfo
+        // console.log(this.movie);
       })
-      console.log(this.actors);
-
+      return this.movie.actors
     }
   },
   methods: {
     getMovie () {
-      // axios({
-      //   url: 'http://127.0.0.1:9000/api/v1/movie/detail?movieId=5deca10c55a2f01c30adf1f9'
-      // }).then(res => {
-      //   // console.log(resMovie);
-      //   this.movie = res.data.result.movieInfo
-      //   // console.log(this.movie);
+      axios({
+        url: 'http://127.0.0.1:9000/api/v1/movie/detail?movieId=5deca10c55a2f01c30adf1f9'
+      }).then(res => {
+        // console.log(resMovie);
+        this.movie = res.data.result.movieInfo
+        // console.log(this.movie);
 
-      // })
+      })
     }
   }
 }

@@ -8,7 +8,7 @@
         <p>标题</p>
       </template>
       <!-- <template #right>
-        <span class='el-icon-delete'></span>
+      <span class='el-icon-delete'></span>
       </template> -->
     </wn_nav>
   </div>
