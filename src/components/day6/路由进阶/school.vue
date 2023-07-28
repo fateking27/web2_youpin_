@@ -1,9 +1,9 @@
 <template>
   <div class='school'>
     <h1>这是{{schoolName}}校区</h1>
-    <router-link :to='"/school/"+id+"/detail"'>详情介绍</router-link>&nbsp;&nbsp;
-    <router-link :to='"/school/"+id+"/jobinfo"'>就业详情</router-link>&nbsp;&nbsp;
-    <router-link :to='"/school/"+id+"/talk"'>线上咨询</router-link>&nbsp;&nbsp;
+    <button @click='jump("detail")'>详情介绍</button>&nbsp;&nbsp;
+    <button @click='jump("jobinfo")'>就业详情</button>&nbsp;&nbsp;
+    <button @click='jump("talk")'>线上咨询</button>&nbsp;&nbsp;
     <!-- 添加嵌套路由所映射的组件的展示出口 -->
     <router-view></router-view>
   </div>
@@ -15,6 +15,18 @@ export default {
     return {
       schoolName: '',
       id: ''
+    }
+  },
+  methods: {
+    jump (name) {
+      console.log('进来了');
+
+      // 字符串代表一个路径
+      // this.$router.push({ path: `/school/1/detail` })
+      // this.$router.push({ path: `detail`, query: { id: this.id } })
+      // this.$router.push(`detail`)
+
+      this.$router.push({ name, params: { id: this.id } })
     }
   },
   // 从另外一个路由跳转到当前路由，需要加载当前组件，触发mounted

@@ -9,38 +9,44 @@ const router = new VueRouter({
   routes: [
     {
       path: '/',
-      redirect: '/find'
+      // 添加重定向
+      redirect: '/index'
     },
-    // 发现音乐
     {
-      path: '/find',
-      component: () => import('@/components/day6/音乐网站/Find.vue'),
-      // 添加嵌套路由配置
+      path: '/index',
+      // component: Login
+      // import：内置的一个引入其它模块的函数
+      component: () => import('@/components/day6/路由进阶/index.vue')
+    },
+    {
+      // 设置路由参数   /路径/:参数名称
+      path: '/school/:id?',
+      component: () => import('@/components/day6/路由进阶/school.vue'),
+      // 添加 school的嵌套路由
       children: [
         {
-          path: 'recommend',
-          components: {
-            b: () => import('@/components/day6/音乐网站/Recommend.vue')
-          }
+          path: '',
+          redirect: 'detail'
+        },
+        // 嵌套路由的配置和普通路由配置基本一样
+        {
+          // 路径建议不用添加/, /代表根路由
+          path: 'detail',
+          // 为路由命名--命名路由
+          name: 'detail',
+          component: () => import('@/components/day6/路由进阶/detail.vue')
         },
         {
-          path: 'ranking',
-          components: {
-            a: () => import('@/components/day6/音乐网站/Ranking.vue')
-          }
+          path: 'talk',
+          name: 'talk',
+          component: () => import('@/components/day6/路由进阶/talk.vue')
         },
         {
-          path: 'songList',
-          components: {
-            b: () => import('@/components/day6/音乐网站/SongList.vue')
-          }
+          path: 'jobinfo',
+          name: 'jobinfo',
+          component: () => import('@/components/day6/路由进阶/jobinfo.vue')
         }
       ]
-    },
-    // 我的音乐
-    {
-      path: '/my',
-      component: () => import('@/components/day6/音乐网站/My.vue')
     }
   ]
 })
