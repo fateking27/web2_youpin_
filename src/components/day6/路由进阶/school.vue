@@ -1,6 +1,11 @@
 <template>
-  <div>
+  <div class='school'>
     <h1>这是{{schoolName}}校区</h1>
+    <router-link :to='"/school/"+id+"/detail"'>详情介绍</router-link>&nbsp;&nbsp;
+    <router-link :to='"/school/"+id+"/jobinfo"'>就业详情</router-link>&nbsp;&nbsp;
+    <router-link :to='"/school/"+id+"/talk"'>线上咨询</router-link>&nbsp;&nbsp;
+    <!-- 添加嵌套路由所映射的组件的展示出口 -->
+    <router-view></router-view>
   </div>
 </template>
 <script>
@@ -8,11 +13,14 @@ export default {
   name: '',
   data () {
     return {
-      schoolName: ''
+      schoolName: '',
+      id: ''
     }
   },
   // 从另外一个路由跳转到当前路由，需要加载当前组件，触发mounted
   mounted () {
+    console.log(this.$route);
+
     // let id = this.$route.params.id
     // console.log('本次的id:', id);
 
@@ -37,6 +45,7 @@ export default {
         // to:跳转的目标路由对象
         // from:源路由对象
         let id = to.params.id
+        this.id = id
         console.log('本次的id:', id);
 
         if (id == 1) {
@@ -60,4 +69,8 @@ export default {
 }
 </script>
 <style lang='less' scoped>
+.school {
+  background-color: #ccc;
+  padding: 20px;
+}
 </style>

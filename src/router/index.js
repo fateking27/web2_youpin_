@@ -20,8 +20,23 @@ const router = new VueRouter({
     },
     {
       // 设置路由参数   /路径/:参数名称
-      path: '/school/:id',
-      component: () => import('@/components/day6/路由进阶/school.vue')
+      path: '/school/:id?',
+      component: () => import('@/components/day6/路由进阶/school.vue'),
+      // 添加 school的嵌套路由
+      children:[
+        // 嵌套路由的配置和普通路由配置基本一样
+        {
+          path:'detail',
+          component:() => import('@/components/day6/路由进阶/detail.vue')
+        }, {
+          path:'talk',
+          component:() => import('@/components/day6/路由进阶/talk.vue')
+        },
+        {
+          path:'jobinfo',
+          component:() => import('@/components/day6/路由进阶/jobinfo.vue')
+        }
+      ]
     }
   ]
 })
