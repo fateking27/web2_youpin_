@@ -14,7 +14,6 @@ Vue.use(ElementUI)
 // 根组件的内容在项目中始终可见
 // 一般情况下，在项目中。根组件中一个空白容器
 import App from './App.vue'
-// import App from './components/day6/路由讲解/index.vue'
 
 // 如果这个包整个项目都需要使用，那么就可以在main.js中进行全局引入--只需要引入一次
 import 'normalize.css'
