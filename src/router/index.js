@@ -15,6 +15,15 @@ const router = new VueRouter({
         needAuth: false,
         title: '用户登陆'
       }
+    },
+    {
+      path: '/index',
+      name: 'index',
+      component: () => import('@/views/home/index.vue'),
+      meta: {
+        needAuth: true,
+        title: '后台首页'
+      }
     }
   ]
 })

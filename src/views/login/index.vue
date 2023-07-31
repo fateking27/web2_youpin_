@@ -36,6 +36,7 @@
 </template>
 <script>
 import bgimg from '@/assets/login_bg.jpg'
+import { userLogin } from '@/apis/user.js'
 export default {
   name: 'Login',
   data () {
@@ -60,9 +61,20 @@ export default {
   methods: {
     login () {
       // 判断是否通过的校验
-      this.$refs.loginForm.validate(valid => {
+      this.$refs.loginForm.validate(async valid => {
         if (valid) {
           // 发起登陆请求
+          let res = await userLogin(this.loginForm)
+          let token = res.data.data.token
+          if (token) {
+            localStorage.setItem('web2_youpin_token', token)
+            this.$router.push('/index')
+
+          } else {
+            this.$message.error('登陆失败');
+
+          }
+
         } else {
           this.$message.error('用户或密码输入不合法');
         }
