@@ -65,6 +65,8 @@ export default {
         if (valid) {
           // 发起登陆请求
           let res = await userLogin(this.loginForm)
+          console.log(res);
+
           let token = res.data.data.token
           if (token) {
             localStorage.setItem('web2_youpin_token', token)

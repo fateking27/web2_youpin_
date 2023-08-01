@@ -23,9 +23,81 @@ const router = new VueRouter({
       meta: {
         needAuth: true,
         title: '后台首页'
-      }
+      },
+      redirect: '/index/dashboard',
+      // 添加嵌套路由
+      children: [
+        {
+          path: 'dashboard',
+          name: 'dashboard',
+          component: () => import('@/views/dashboard/index.vue'),
+          meta: {
+            needAuth: true,
+            title: '后台图表页'
+          }
+        },
+        {
+          path: 'manager',
+          name: 'manager',
+          component: () => import('@/views/user/userManager.vue'),
+          meta: {
+            needAuth: true,
+            title: '用户管理'
+          }
+        },
+        {
+          path: 'group',
+          name: 'group',
+          component: () => import('@/views/user/usergroup.vue'),
+          meta: {
+            needAuth: true,
+            title: '用户分组'
+          }
+        },
+        {
+          path: 'usertag',
+          name: 'usertag',
+          component: () => import('@/views/user/usertag.vue'),
+          meta: {
+            needAuth: true,
+            title: '用户标签'
+          }
+        },
+        {
+          path: 'userlevel',
+          name: 'userlevel',
+          component: () => import('@/views/user/userlevel.vue'),
+          meta: {
+            needAuth: true,
+            title: '用户等级'
+          }
+        }
+      ]
     }
   ]
+})
+
+// 导航守卫
+router.beforeEach((to, from, next) => {
+  // 如果是不需要校验的路由，直接next
+  if (!to.meta.needAuth) {
+    next()
+  }
+  // 否则，判断是否有token,如果有则next(),否则重定向到登陆页
+  else {
+    let token = localStorage.getItem('web2_youpin_token')
+    if (token) {
+      next()
+    } else {
+      next('/login')
+    }
+  }
+})
+
+// 添加导航的后置守卫:路由跳转已经完成了再进行触发
+router.afterEach((to, from) => {
+  // 设置当前页面所对应的标题信息
+  document.title = to.meta.title
 })
 
 // 导出
