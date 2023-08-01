@@ -10,6 +10,7 @@
           <wnheader></wnheader>
         </el-header>
         <el-main>
+          <wnbreadCrumb></wnbreadCrumb>
           <router-view></router-view>
         </el-main>
       </el-container>
@@ -19,6 +20,7 @@
 <script>
 import wnmenu from '@/components/wnmenu/index.vue'
 import wnheader from '@/components/wnheader/index.vue'
+import wnbreadCrumb from '@/components/breadCrumb/index.vue'
 export default {
   name: '',
   data () {
@@ -26,7 +28,7 @@ export default {
     }
   },
   components: {
-    wnmenu, wnheader
+    wnmenu, wnheader, wnbreadCrumb
   },
 }
 </script>

@@ -6,9 +6,12 @@
              text-color="#fff"
              active-text-color="#ffd04b"
              :unique-opened='true'
-             :router='true'>
+             :router='true'
+             @open="handleOpen"
+             ref='mymenu'>
 
-      <el-menu-item index="/index">
+      <el-menu-item index="/index"
+                    @click='deal'>
         <i class="el-icon-menu"></i>
         <span slot="title">首页</span>
       </el-menu-item>
@@ -62,11 +65,33 @@ export default {
   name: '',
   data () {
     return {
+      currentIndex: ''
     }
   },
-  watch:{
-    $route(newv){
-      console.log(newv);
+  watch: {
+    $route: {
+      handler (newv) {
+        // console.log('newv----', newv);
+        let arr = newv.matched.map(v => {
+          return {
+            title: v.meta.title,
+            path: v.path
+          }
+        })
+        console.log(arr);
+
+        this.$store.commit('updateBreadPath', arr)
+      },
+      deep: true,
+      immediate: true
+    }
+  },
+  methods: {
+    handleOpen (index) {
+      this.currentIndex = index
+    },
+    deal () {
+      this.$refs.mymenu.close(this.currentIndex)
     }
   }
 }
