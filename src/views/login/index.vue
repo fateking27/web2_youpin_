@@ -69,7 +69,10 @@ export default {
 
           let token = res.data.data.token
           if (token) {
-            localStorage.setItem('web2_youpin_token', token)
+            // localStorage.setItem('web2_youpin_token', token)
+            this.$store.commit('updateToken', token)
+            // 将用户信息存储到vuex
+            this.$store.commit('updateUserInfo', res.data.data.user_info)
             this.$router.push('/index')
 
           } else {

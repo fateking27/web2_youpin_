@@ -1,5 +1,9 @@
 import axios from 'axios'
 
+import store from '@/store/index.js'
+
+// console.log('store.state----', store.state)
+
 // axios.defaults.baseURL = 'https://youpin.nuok.com/adminapi'
 
 export const instance = axios.create({

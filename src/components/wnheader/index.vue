@@ -4,7 +4,7 @@
       <span class='el-icon-d-arrow-left'></span>
       <el-dropdown trigger="click">
         <span class="el-dropdown-link">
-          admin<i class="el-icon-arrow-down el-icon--right"></i>
+          {{userInfo.account}}<i class="el-icon-arrow-down el-icon--right"></i>
         </span>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item>个人中心</el-dropdown-item>
@@ -15,6 +15,7 @@
   </div>
 </template>
 <script>
+import { mapState } from 'vuex'
 export default {
   name: '',
   data () {
@@ -22,7 +23,14 @@ export default {
       isCollapse: false
     }
   },
-  methods:{
+  computed: {
+    ...mapState(['userInfo']),
+    // 相当于
+    // userInfo () {
+    //   return this.$store.userInfo
+    // }
+  },
+  methods: {
   }
 }
 </script>

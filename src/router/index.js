@@ -2,6 +2,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
+import store from '@/store/index.js'
+
 Vue.use(VueRouter)
 
 // 路由模块的创建和路由配置
@@ -85,7 +87,7 @@ router.beforeEach((to, from, next) => {
   }
   // 否则，判断是否有token,如果有则next(),否则重定向到登陆页
   else {
-    let token = localStorage.getItem('web2_youpin_token')
+    let token = store.state.token
     if (token) {
       next()
     } else {
