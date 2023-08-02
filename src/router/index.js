@@ -48,6 +48,15 @@ const router = new VueRouter({
           }
         },
         {
+          path: 'useradd',
+          name: 'useradd',
+          component: () => import('@/views/user/userAdd.vue'),
+          meta: {
+            needAuth: true,
+            title: '用户添加'
+          }
+        },
+        {
           path: 'group',
           name: 'group',
           component: () => import('@/views/user/usergroup.vue'),

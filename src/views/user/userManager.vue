@@ -6,20 +6,31 @@
         <el-tab-pane label="全部"
                      name="first"></el-tab-pane>
         <el-tab-pane label="微信公众号"
-                     name="second">微信公众号</el-tab-pane>
+                     name="second"></el-tab-pane>
         <el-tab-pane label="微信小程序"
-                     name="third">微信小程序</el-tab-pane>
+                     name="third"></el-tab-pane>
         <el-tab-pane label="H5"
-                     name="fourth">H5</el-tab-pane>
+                     name="fourth"></el-tab-pane>
         <el-tab-pane label="PC"
-                     name="fifth">PC</el-tab-pane>
+                     name="fifth"></el-tab-pane>
         <el-tab-pane label="APP"
-                     name="six">APP</el-tab-pane>
+                     name="six"></el-tab-pane>
       </el-tabs>
-
+      <div class='btns'
+           style='margin:20px 0'>
+        <el-button type="primary"
+                   size="medium"
+                   @click='$router.push({name:"useradd"})'>添加用户</el-button>
+        <el-button size="medium">发送优惠券</el-button>
+        <el-button icon="el-icon-document"
+                   size="medium">发送图文消息</el-button>
+        <el-button size="medium">批量设置组</el-button>
+        <el-button size="medium">批量设置标签</el-button>
+      </div>
       <!-- 表格--拥有展开行 -->
       <el-table :data="userList"
-                style="width: 100%">
+                style="width: 100%"
+                :default-sort="{prop: 'pay_count', order: 'descending'}">
         <!-- type="expand"：添加展开行 -->
         <el-table-column type="expand">
           <template slot-scope="props">
@@ -76,6 +87,7 @@
                          prop="user_type">
         </el-table-column>
         <el-table-column label="余额"
+                         sortable
                          prop="pay_count">
         </el-table-column>
         <!--  fixed="right"：添加右侧固定列 -->
@@ -105,7 +117,8 @@
                      :page-sizes="[4,6,8,10]"
                      :page-size="pageSize"
                      layout="total, sizes, prev, pager, next, jumper"
-                     :total="total">
+                     :total="total"
+                     style='margin:20px 0;float:right;'>
       </el-pagination>
     </el-card>
   </div>
@@ -119,6 +132,8 @@ export default {
     return {
       userList: [],
       activeName: 'first',
+      typeList: ['', 'wechat', 'routine', 'h5', 'pc', 'app'],
+      user_type: '',//用户类型
       pageIndex: 1,//当前页码
       pageSize: 4,//每页显示的数量
       total: 0 //总记录数，来自于后台接口的响应数据
@@ -143,7 +158,13 @@ export default {
       this.init()
     },
     async init (params) {
-      let res = await getUserListHandler({ user_type: '', limit: this.pageSize, page: this.pageIndex })
+      let res = await getUserListHandler(
+        {
+          user_type: this.user_type,
+          limit: this.pageSize,
+          page: this.pageIndex
+        }
+      )
       this.userList = res.data.data.list
       this.total = res.data.data.count
       console.log(res);
@@ -151,7 +172,9 @@ export default {
     },
 
     handleClick (tab, event) {
-      // console.log(tab, event);
+      this.user_type = this.typeList[tab.index]
+      this.pageIndex = 1
+      this.init()
     }
   }
 }
