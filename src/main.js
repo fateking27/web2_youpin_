@@ -10,6 +10,8 @@ import store from '@/store/index.js'
 Vue.use(ElementUI)
 
 import 'normalize.css'
+import moment from 'moment'
+Vue.prototype.$moment = moment
 
 Vue.config.productionTip = false
 
