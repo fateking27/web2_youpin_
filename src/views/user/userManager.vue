@@ -26,23 +26,20 @@
             <div class='expandContent'>
               <div class='item'>
                 <p>首次访问:{{$moment(props.row.add_time*1000).format('YYYY-MM-DD')}}</p>
-                <p>标签：朋友介绍，网上搜索</p>
+                <p>标签：</p>
                 <p>备注：</p>
               </div>
               <div class='item'>
-                <p>首次访问:2023-06-06</p>
-                <p>标签：朋友介绍，网上搜索</p>
-                <p>备注：</p>
+                <p>近次访问:{{$moment(props.row.add_time*1000).format('YYYY-MM-DD')}}</p>
+                <p>生日：{{props.row.birthday}}</p>
               </div>
               <div class='item'>
-                <p>首次访问:2023-06-06</p>
-                <p>标签：朋友介绍，网上搜索</p>
-                <p>备注：</p>
+                <p>身份证号:{{props.row.card_id}}</p>
+                <p>推荐人：{{props.row.spread_uid_nickname}}</p>
               </div>
               <div class='item'>
-                <p>首次访问:2023-06-06</p>
-                <p>标签：朋友介绍，网上搜索</p>
-                <p>备注：</p>
+                <p>真实姓名:{{props.row.read_name}}</p>
+                <p>地址：</p>
               </div>
             </div>
           </template>
@@ -101,7 +98,16 @@
           </template>
         </el-table-column>
       </el-table>
-
+      <!-- 分页 -->
+      <el-pagination @size-change="handleSizeChange"
+                     @current-change="handleCurrentChange"
+                     :current-page="pageIndex"
+                     :page-sizes="[5, 4, 10, 20]"
+                     :page-size="pageSize"
+                     layout="total, sizes, prev, pager, next, jumper"
+                     :total="total"
+                     style='margin-top:20px;float:right'>
+      </el-pagination>
     </el-card>
   </div>
 </template>
@@ -113,14 +119,27 @@ export default {
 
     return {
       userList: [],
-      activeName: 'first'
+      activeName: 'first',
+      pageIndex: 1,//当前页码
+      pageSize: 5,//每页显示的记录数
+      total: 141, // 记录总数
     }
   },
   created () {
-    this.init({ user_type: '', limit: 3 })
+    this.init({ user_type: '', page: this.pageIndex, limit: this.pageSize })
 
   },
   methods: {
+    // 每页显示的数量设置发生变化时触发
+    handleSizeChange (val) {
+      this.pageSize = val
+      this.init({ user_type: '', page: this.pageIndex, limit: this.pageSize })
+    },
+    // 当前页码发生变化时触发
+    handleCurrentChange (val) {
+      this.pageIndex = val
+      this.init({ user_type: '', page: this.pageIndex, limit: this.pageSize })
+    },
     async init (params) {
       let res = await getUserListHandler(params)
       this.userList = res.data.data.list
