@@ -102,11 +102,10 @@
       <el-pagination @size-change="handleSizeChange"
                      @current-change="handleCurrentChange"
                      :current-page="pageIndex"
-                     :page-sizes="[5, 4, 10, 20]"
+                     :page-sizes="[4,6,8,10]"
                      :page-size="pageSize"
                      layout="total, sizes, prev, pager, next, jumper"
-                     :total="total"
-                     style='margin-top:20px;float:right'>
+                     :total="total">
       </el-pagination>
     </el-card>
   </div>
@@ -121,28 +120,32 @@ export default {
       userList: [],
       activeName: 'first',
       pageIndex: 1,//当前页码
-      pageSize: 5,//每页显示的记录数
-      total: 141, // 记录总数
+      pageSize: 4,//每页显示的数量
+      total: 0 //总记录数，来自于后台接口的响应数据
     }
   },
   created () {
-    this.init({ user_type: '', page: this.pageIndex, limit: this.pageSize })
+    this.init()
 
   },
   methods: {
-    // 每页显示的数量设置发生变化时触发
+    // 切换每页显示的数量
     handleSizeChange (val) {
+      // val:当前每页需要显示的记录数
       this.pageSize = val
-      this.init({ user_type: '', page: this.pageIndex, limit: this.pageSize })
+      this.init()
+
     },
-    // 当前页码发生变化时触发
+    // 切换当前页码
     handleCurrentChange (val) {
+      // val:当前用户所单击的页码，我们应该获取这个页码的数据
       this.pageIndex = val
-      this.init({ user_type: '', page: this.pageIndex, limit: this.pageSize })
+      this.init()
     },
     async init (params) {
-      let res = await getUserListHandler(params)
+      let res = await getUserListHandler({ user_type: '', limit: this.pageSize, page: this.pageIndex })
       this.userList = res.data.data.list
+      this.total = res.data.data.count
       console.log(res);
 
     },
@@ -156,7 +159,7 @@ export default {
 <style lang='less' scoped>
 .userManager {
   img {
-    width: 60px;
+    width: 40px;
   }
   /deep/ .el-dropdown-link {
     font-size: 12px;
