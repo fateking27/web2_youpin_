@@ -73,7 +73,16 @@ export default {
             this.$store.commit('updateToken', token)
             // 将用户信息存储到vuex
             this.$store.commit('updateUserInfo', res.data.data.user_info)
-            this.$router.push('/index')
+            // 获取可能存在的目标地址
+            // let des = location.hash.split('=')[1]
+            let des = this.$route.fullPath.split('=')[1]
+
+            if (des) {
+              this.$router.push(decodeURIComponent(des))
+            }
+            else {
+              this.$router.push('/index')
+            }
 
           } else {
             this.$message.error('登陆失败');

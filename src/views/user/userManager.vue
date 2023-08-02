@@ -36,6 +36,7 @@
   </div>
 </template>
 <script>
+import { getUserListHandler } from '@/apis/user.js'
 export default {
   name: '',
   data () {
@@ -60,6 +61,11 @@ export default {
       }],
       activeName: 'first'
     }
+  },
+  async created () {
+    let res = await getUserListHandler({ user_type: 'routine' })
+    console.log(res);
+
   },
   methods: {
     handleClick (tab, event) {

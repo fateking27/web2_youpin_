@@ -78,7 +78,7 @@ export default {
             path: v.path
           }
         })
-        console.log(arr);
+        // console.log(arr);
 
         this.$store.commit('updateBreadPath', arr)
       },
