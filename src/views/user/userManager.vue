@@ -17,18 +17,39 @@
                      name="six">APP</el-tab-pane>
       </el-tabs>
 
-      <el-table :data="tableData"
+      <!-- 表格--拥有展开行 -->
+      <el-table :data="tableData5"
                 style="width: 100%">
-        <el-table-column prop="date"
-                         label="日期"
-                         width="180">
+        <!-- type="expand"：添加展开行 -->
+        <el-table-column type="expand">
+          <template slot-scope="props">
+            展开行的内容
+          </template>
         </el-table-column>
-        <el-table-column prop="name"
-                         label="姓名"
-                         width="180">
+        <!-- type="selection：添加复选框列 -->
+        <el-table-column type="selection"
+                         width="55">
         </el-table-column>
-        <el-table-column prop="address"
-                         label="地址">
+        <el-table-column label="商品 ID"
+                         prop="id">
+        </el-table-column>
+        <el-table-column label="商品名称"
+                         prop="name">
+        </el-table-column>
+        <el-table-column label="描述"
+                         prop="desc">
+        </el-table-column>
+        <!--  fixed="right"：添加右侧固定列 -->
+        <el-table-column fixed="right"
+                         label="操作"
+                         width="100">
+          <!-- 使用了自定义列模板，方便后期数据的获取 -->
+          <template slot-scope="scope">
+            <el-button type="text"
+                       size="small">查看</el-button>
+            <el-button type="text"
+                       size="small">编辑</el-button>
+          </template>
         </el-table-column>
       </el-table>
 
@@ -42,32 +63,55 @@ export default {
   data () {
 
     return {
-      tableData: [{
-        date: '2016-05-02',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄'
+      tableData5: [{
+        id: '12987122',
+        name: '好滋好味鸡蛋仔',
+        category: '江浙小吃、小吃零食',
+        desc: '荷兰优质淡奶，奶香浓而不腻',
+        address: '上海市普陀区真北路',
+        shop: '王小虎夫妻店',
+        shopId: '10333'
       }, {
-        date: '2016-05-04',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1517 弄'
+        id: '12987123',
+        name: '好滋好味鸡蛋仔',
+        category: '江浙小吃、小吃零食',
+        desc: '荷兰优质淡奶，奶香浓而不腻',
+        address: '上海市普陀区真北路',
+        shop: '王小虎夫妻店',
+        shopId: '10333'
       }, {
-        date: '2016-05-01',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1519 弄'
+        id: '12987125',
+        name: '好滋好味鸡蛋仔',
+        category: '江浙小吃、小吃零食',
+        desc: '荷兰优质淡奶，奶香浓而不腻',
+        address: '上海市普陀区真北路',
+        shop: '王小虎夫妻店',
+        shopId: '10333'
       }, {
-        date: '2016-05-03',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1516 弄'
+        id: '12987126',
+        name: '好滋好味鸡蛋仔',
+        category: '江浙小吃、小吃零食',
+        desc: '荷兰优质淡奶，奶香浓而不腻',
+        address: '上海市普陀区真北路',
+        shop: '王小虎夫妻店',
+        shopId: '10333'
       }],
+      userList: [],
       activeName: 'first'
     }
   },
-  async created () {
-    let res = await getUserListHandler({ user_type: 'routine' })
-    console.log(res);
+  created () {
+    this.init()
 
   },
   methods: {
+    async init (params) {
+      let res = await getUserListHandler(params)
+      this.userList = res.data.data.list
+      console.log(res);
+
+    },
+
     handleClick (tab, event) {
       console.log(tab, event);
     }
