@@ -19,3 +19,28 @@ export const getUserListHandler = function(params) {
     params
   })
 }
+
+// 获取所有用户等级
+export const getUserLevelHandler = function() {
+  return instance({
+    method: 'get',
+    url: '/user/user_level/vip_list'
+  })
+}
+
+// 获取所有用户等级
+export const getUserGroupHandler = function() {
+  return instance({
+    method: 'get',
+    url: '/user/user_group/list'
+  })
+}
+
+
+// 获取所有用户标签
+export const getUserTagHandler = function() {
+  return instance({
+    method: 'get',
+    url: '/user/label/0'
+  })
+}

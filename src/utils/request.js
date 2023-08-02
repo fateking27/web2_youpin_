@@ -30,7 +30,7 @@ instance.interceptors.request.use(
 // 添加响应拦截器
 instance.interceptors.response.use(
   function(response) {
-    console.log('response---', response)
+    // console.log('response---', response)
     if (response.data.status == 110003) {
       // 提示
       Message.warning('未登陆，请先登陆')

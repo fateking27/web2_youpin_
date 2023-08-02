@@ -167,7 +167,7 @@ export default {
       )
       this.userList = res.data.data.list
       this.total = res.data.data.count
-      console.log(res);
+      // console.log(res);
 
     },
 
