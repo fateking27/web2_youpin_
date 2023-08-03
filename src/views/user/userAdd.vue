@@ -132,7 +132,15 @@
 
 <script>
 import moment from 'moment'
-import { getUserLevelHandler, getUserGroupHandler, getUserTagHandler } from '@/apis/user.js'
+import {
+  getUserLevelHandler,
+  getUserGroupHandler,
+  getUserTagHandler,
+  addUserHandler,
+  getUserByIdHandler,
+  editUserHandler
+} from '@/apis/user.js'
+
 export default {
   data () {
     return {
@@ -163,22 +171,61 @@ export default {
       label_idTemp: []
     }
   },
-  created () {
+  async created () {
     this.getUserLevel()
     this.getUserGroup()
     this.getUserTag()
+
+    // 获取用户数据
+    let id = this.$route.params.id
+    let res = await getUserByIdHandler(id)
+    let userData = res.data.data.ps_info
+    console.log(userData);
+
+    this.addUserForm = {
+      uid: id,
+      real_name: userData.real_name,
+      phone: userData.phone,
+      birthday: userData.birthday,
+      card_id: userData.card_id,
+      addres: userData.addres,
+      mark: userData.mark,
+      pwd: userData.pwd,
+      true_pwd: userData.true_pwd,
+      level: userData.level,
+      group_id: userData.group_id,
+      label_id: [3, 4, 5],
+      spread_open: userData.spread_open,
+      is_promoter: userData.is_promoter,
+      status: userData.status
+    }
+    // this.userLabelNames = [3, 4, 5]
+    // 根据lobel_id中的id号，找到对应的数据，进行操作
+    // 1.将id对应的字符串名称 添加到 userLabelNames
+    // 2.将id对应的数据对象的isSelected设置为true
+    this.userTagList.forEach(pa => {
+      pa.label.forEach(son => {
+        // 当前要移除的就是当前这个son
+        if (this.addUserForm.label_id.indexOf(son.id) != -1) {
+          son.isSelected = !son.isSelected
+          this.userLabelNames.push(son.label_name)
+        }
+      })
+    })
+
   },
   methods: {
     closeDialogHandler () {
-      document.documentElement.style.setProperty('--dropdownshow', 'block');
+      // document.documentElement.style.setProperty('--dropdown_show', 'block');
     },
     // 关闭模态框之前的回调函数--单击右上角的*
     beforeCloseHandler (done) {
-
       this.resetTagSelectHandler()
       this.userLabelNamesTemp = []
       this.label_idTemp = []
       // 将之前选中的值移除
+      // document.documentElement.style.setProperty('--dropdown_show', 'block');
+      // done()将模态框关闭
       done()
     },
     resetTagSelectHandler () {
@@ -211,7 +258,6 @@ export default {
     // 移除下拉列表中的选项---在多选的情况下
     removeTagHandler (v) {
       // v就是移除的tag标签的文本内容
-      console.log(v, this.userLabelNames);
       // 改变当前所删除的Tag项所对应的Tag标签的样式
       // 将数据对象中的label_id中对应的数据id删除
       this.userTagList.forEach(pa => {
@@ -231,7 +277,7 @@ export default {
       // 让样式有一个变化
       current.isSelected = !current.isSelected
       // 查找元素在数组中第一次出现的索引位置，如果能找到就返回对应的索引(索引>=0),如果找不到则返回-1
-      let index = this.addUserForm.label_id.indexOf(current.id)
+      let index = this.label_idTemp.indexOf(current.id)
       // 判断：当前Tag是否已经被添加了，如果被添加了，此次单击应该是移除
       if (index == -1) {
         // 进行数据的收集（移除）
@@ -247,12 +293,20 @@ export default {
     tagSelectVisibleHandler () {
       this.UserlabeldialogVisible = true
       // 将样式重置为none
-      document.documentElement.style.setProperty('--dropdownshow', 'none');
+      // document.documentElement.style.setProperty('--dropdown_show', 'none');
     },
 
 
-    addUser () {
-      console.log(this.addUserForm);
+    async addUser () {
+      if (this.addUserForm.uid) {
+        let res = await editUserHandler(this.addUserForm)
+      } else {
+        let res = await addUserHandler(this.addUserForm)
+
+      }
+      this.$message.success('操作成功')
+      this.$router.push('/user/manager')
+
     },
     async getUserLevel () {
       let res = await getUserLevelHandler()
@@ -262,7 +316,6 @@ export default {
     },
     async getUserGroup () {
       let res = await getUserGroupHandler()
-      console.log(res);
 
       this.userGroupList = res.data.data.list
       this.addUserForm.group_id = this.userGroupList[0].id
@@ -280,19 +333,10 @@ export default {
         })
         return v
       })
-      console.log(this.userTagList);
     }
   }
 }
 </script>
-<style>
-:root {
-  --dropdownshow: block;
-}
-.el-select-dropdown {
-  display: var(--dropdownshow);
-}
-</style>
 
 <style lang="less" scoped>
 .el-tag {

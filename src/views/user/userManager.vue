@@ -97,7 +97,8 @@
           <!-- 使用了自定义列模板，方便后期数据的获取 -->
           <template slot-scope="scope">
             <el-button type="text"
-                       size="small">编辑</el-button>
+                       size="small"
+                       @click='$router.push(`useredit/${scope.row.uid}`)'>编辑</el-button>
             <el-dropdown>
               <span class="el-dropdown-link">
                 更多<i class="el-icon-arrow-down el-icon--right"></i>
@@ -141,7 +142,6 @@ export default {
   },
   created () {
     this.init()
-
   },
   methods: {
     // 切换每页显示的数量

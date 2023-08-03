@@ -57,6 +57,15 @@ const router = new VueRouter({
           }
         },
         {
+          path: 'useredit/:id',
+          name: 'useredit',
+          component: () => import('@/views/user/userAdd.vue'),
+          meta: {
+            needAuth: true,
+            title: '用户编辑'
+          }
+        },
+        {
           path: 'group',
           name: 'group',
           component: () => import('@/views/user/usergroup.vue'),
