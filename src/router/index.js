@@ -19,14 +19,14 @@ const router = new VueRouter({
       }
     },
     {
-      path: '/index',
-      name: 'index',
+      path: '/admin',
+      name: 'admin',
       component: () => import('@/views/home/index.vue'),
       meta: {
         needAuth: true,
         title: '后台首页'
       },
-      redirect: '/index/dashboard',
+      redirect: '/admin/dashboard',
       // 添加嵌套路由
       children: [
         {
@@ -90,6 +90,42 @@ const router = new VueRouter({
           meta: {
             needAuth: true,
             title: '用户等级'
+          }
+        },
+        {
+          path: 'setting',
+          name: 'setting',
+          redirect: 'setting/system_role/index',
+          meta: {
+            needAuth: true,
+            title: '权限管理'
+          }
+        },
+        {
+          path: 'setting/system_role/index',
+          name: 'system_role',
+          component: () => import('@/views/role/roleList.vue'),
+          meta: {
+            needAuth: true,
+            title: '角色管理'
+          }
+        },
+        {
+          path: 'setting/system_menus/index',
+          name: 'system_menus',
+          component: () => import('@/views/role/roleRules.vue'),
+          meta: {
+            needAuth: true,
+            title: '权限规则'
+          }
+        },
+        {
+          path: 'setting/system_admin/index',
+          name: 'system_admin',
+          component: () => import('@/views/role/managerList.vue'),
+          meta: {
+            needAuth: true,
+            title: '管理员列表'
           }
         }
       ]

@@ -182,8 +182,6 @@ export default {
     if (id) {
       let res = await getUserByIdHandler(id)
       let userData = res.data.data.ps_info
-      console.log(userData);
-
       this.addUserForm = {
         uid: id,
         real_name: userData.real_name,
