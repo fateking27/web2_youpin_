@@ -81,7 +81,7 @@ export default {
               this.$router.push(decodeURIComponent(des))
             }
             else {
-              this.$router.push('/index')
+              this.$router.push('/admin')
             }
 
           } else {
