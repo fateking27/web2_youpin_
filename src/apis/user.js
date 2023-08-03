@@ -36,7 +36,6 @@ export const getUserGroupHandler = function() {
   })
 }
 
-
 // 获取所有用户标签
 export const getUserTagHandler = function() {
   return instance({

@@ -70,12 +70,14 @@
         <el-select v-model="userLabelNames"
                    multiple
                    placeholder="请选择用户关联标签"
-                   @focus='tagSelectVisibleHandler'>
+                   @focus='tagSelectVisibleHandler'
+                   @remove-tag='removeTagHandler'>
         </el-select>
       </el-form-item>
       <el-dialog title="选择用户标签"
                  :visible.sync="UserlabeldialogVisible"
-                 width="70%">
+                 width="70%"
+                 :before-close='beforeCloseHandler'>
 
         <div class='item'
              v-for='item in userTagList'>
@@ -88,8 +90,9 @@
         </div>
         <span slot="footer"
               class="dialog-footer">
-          <el-button>取 消</el-button>
-          <el-button type="primary">确 定</el-button>
+          <el-button @click='cancelTagSelectHandler'>取 消</el-button>
+          <el-button type="primary"
+                     @click='confirmTagSelectHandler'>确 定</el-button>
         </span>
       </el-dialog>
       <!-- 禁用用户推广资格后，在任何分销模式下用户都无分销资格 -->
@@ -153,7 +156,10 @@ export default {
       userLevelList: [],
       userGroupList: [],
       userTagList: [],
-      userLabelNames: []
+      userLabelNames: [],
+      // 临时数组
+      userLabelNamesTemp: [],
+      label_idTemp: []
     }
   },
   created () {
@@ -162,12 +168,80 @@ export default {
     this.getUserTag()
   },
   methods: {
+    // 关闭模态框之前的回调函数--单击右上角的*
+    beforeCloseHandler (done) {
+      this.resetTagSelectHandler()
+
+      this.userLabelNamesTemp = []
+      this.label_idTemp = []
+      // 将之前选中的值移除
+      done()
+    },
+    resetTagSelectHandler () {
+      this.userTagList.forEach(pa => {
+        pa.label.forEach(son => {
+          // 当前要移除的就是当前这个son
+          if (this.userLabelNamesTemp.indexOf(son.label_name) != -1) {
+            son.isSelected = false
+
+          }
+        })
+      })
+    },
+    // 单击模态框的取消
+    cancelTagSelectHandler () {
+      this.resetTagSelectHandler()
+      this.userLabelNamesTemp = []
+      this.label_idTemp = []
+      this.UserlabeldialogVisible = false
+    },
+    // 单击模态框的确认
+    confirmTagSelectHandler () {
+      this.userLabelNames = [...this.userLabelNames, ...this.userLabelNamesTemp]
+      console.log(this.userLabelNames);
+
+
+      this.addUserForm.label_id = [...this.addUserForm.label_id, ...this.label_idTemp]
+      this.UserlabeldialogVisible = false
+
+
+      this.userLabelNamesTemp = []
+      this.label_idTemp = []
+    },
+    // 移除下拉列表中的选项---在多选的情况下
+    removeTagHandler (v) {
+      // v就是移除的tag标签的文本内容
+      console.log(v, this.userLabelNames);
+      // 改变当前所删除的Tag项所对应的Tag标签的样式
+      // 将数据对象中的label_id中对应的数据id删除
+      this.userTagList.forEach(pa => {
+        pa.label.forEach(son => {
+          // 当前要移除的就是当前这个son
+          if (v == son.label_name) {
+            son.isSelected = !son.isSelected
+            // 删除数据对象中的label_id数组中的数据
+            this.addUserForm.label_id = this.addUserForm.label_id.filter(id => id != son.id)
+          }
+        })
+      })
+
+    },
     // 单击模态框中的具体的标签项
     tagClickHandler (current) {
       // 让样式有一个变化
       current.isSelected = !current.isSelected
-      // 进行数据的收集
-      this.userLabelNames.push(current.label_name)
+      // 查找元素在数组中第一次出现的索引位置，如果能找到就返回对应的索引(索引>=0),如果找不到则返回-1
+      let index = this.addUserForm.label_id.indexOf(current.id)
+      // 判断：当前Tag是否已经被添加了，如果被添加了，此次单击应该是移除
+      if (index == -1) {
+        // 进行数据的收集（移除）
+        this.userLabelNamesTemp.push(current.label_name)
+        // 将当前被选中的tag所对应的数据对象的id存储到数组
+        this.label_idTemp.push(current.id)
+      } else {
+        this.userLabelNamesTemp.splice(index, 1)
+        this.label_idTemp.splice(index, 1)
+      }
     },
     // 单击标签下拉列表，切换选项的显示和隐藏时触发
     tagSelectVisibleHandler () {
@@ -190,6 +264,7 @@ export default {
     },
     async getUserTag () {
       let res = await getUserTagHandler()
+      this.userGroupList = res.data.data.list
       // 为了能够在单击单个标签的时候，对标签的样式进行控制，我们需要为每个标签所对应的数据添加标识
       this.userTagList = res.data.data.map(v => {
         v.label = v.label.map(subv => {
@@ -201,8 +276,6 @@ export default {
         return v
       })
       console.log(this.userTagList);
-      // this.userGroupList = res.data.data.list
-      // this.addUserForm.group_id = this.userGroupList[0].id
     }
   }
 }
