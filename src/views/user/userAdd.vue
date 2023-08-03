@@ -178,40 +178,44 @@ export default {
 
     // 获取用户数据
     let id = this.$route.params.id
-    let res = await getUserByIdHandler(id)
-    let userData = res.data.data.ps_info
-    console.log(userData);
+    // 如果有id，说明是编辑，才进行数据的查询的数据的回填
+    if (id) {
+      let res = await getUserByIdHandler(id)
+      let userData = res.data.data.ps_info
+      console.log(userData);
 
-    this.addUserForm = {
-      uid: id,
-      real_name: userData.real_name,
-      phone: userData.phone,
-      birthday: userData.birthday,
-      card_id: userData.card_id,
-      addres: userData.addres,
-      mark: userData.mark,
-      pwd: userData.pwd,
-      true_pwd: userData.true_pwd,
-      level: userData.level,
-      group_id: userData.group_id,
-      label_id: [3, 4, 5],
-      spread_open: userData.spread_open,
-      is_promoter: userData.is_promoter,
-      status: userData.status
-    }
-    // this.userLabelNames = [3, 4, 5]
-    // 根据lobel_id中的id号，找到对应的数据，进行操作
-    // 1.将id对应的字符串名称 添加到 userLabelNames
-    // 2.将id对应的数据对象的isSelected设置为true
-    this.userTagList.forEach(pa => {
-      pa.label.forEach(son => {
-        // 当前要移除的就是当前这个son
-        if (this.addUserForm.label_id.indexOf(son.id) != -1) {
-          son.isSelected = !son.isSelected
-          this.userLabelNames.push(son.label_name)
-        }
+      this.addUserForm = {
+        uid: id,
+        real_name: userData.real_name,
+        phone: userData.phone,
+        birthday: userData.birthday,
+        card_id: userData.card_id,
+        addres: userData.addres,
+        mark: userData.mark,
+        pwd: userData.pwd,
+        true_pwd: userData.true_pwd,
+        level: userData.level,
+        group_id: userData.group_id,
+        label_id: [3, 4, 5],
+        spread_open: userData.spread_open,
+        is_promoter: userData.is_promoter,
+        status: userData.status
+      }
+      // this.userLabelNames = [3, 4, 5]
+      // 根据lobel_id中的id号，找到对应的数据，进行操作
+      // 1.将id对应的字符串名称 添加到 userLabelNames
+      // 2.将id对应的数据对象的isSelected设置为true
+      this.userTagList.forEach(pa => {
+        pa.label.forEach(son => {
+          // 当前要移除的就是当前这个son
+          if (this.addUserForm.label_id.indexOf(son.id) != -1) {
+            son.isSelected = !son.isSelected
+            this.userLabelNames.push(son.label_name)
+          }
+        })
       })
-    })
+    }
+
 
   },
   methods: {
@@ -302,11 +306,9 @@ export default {
         let res = await editUserHandler(this.addUserForm)
       } else {
         let res = await addUserHandler(this.addUserForm)
-
       }
       this.$message.success('操作成功')
-      this.$router.push('/user/manager')
-
+      this.$router.push('/index/manager')
     },
     async getUserLevel () {
       let res = await getUserLevelHandler()

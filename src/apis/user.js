@@ -36,7 +36,7 @@ export const getUserLevelHandler = function() {
   })
 }
 
-// 获取所有用户等级
+// 获取所有用户分组
 export const getUserGroupHandler = function() {
   return instance({
     method: 'get',
