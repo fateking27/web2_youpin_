@@ -77,7 +77,8 @@
       <el-dialog title="选择用户标签"
                  :visible.sync="UserlabeldialogVisible"
                  width="70%"
-                 :before-close='beforeCloseHandler'>
+                 :before-close='beforeCloseHandler'
+                 @close="closeDialogHandler">
 
         <div class='item'
              v-for='item in userTagList'>
@@ -168,10 +169,13 @@ export default {
     this.getUserTag()
   },
   methods: {
+    closeDialogHandler () {
+      document.documentElement.style.setProperty('--dropdownshow', 'block');
+    },
     // 关闭模态框之前的回调函数--单击右上角的*
     beforeCloseHandler (done) {
-      this.resetTagSelectHandler()
 
+      this.resetTagSelectHandler()
       this.userLabelNamesTemp = []
       this.label_idTemp = []
       // 将之前选中的值移除
@@ -182,8 +186,7 @@ export default {
         pa.label.forEach(son => {
           // 当前要移除的就是当前这个son
           if (this.userLabelNamesTemp.indexOf(son.label_name) != -1) {
-            son.isSelected = false
-
+            son.isSelected = !son.isSelected
           }
         })
       })
@@ -195,15 +198,12 @@ export default {
       this.label_idTemp = []
       this.UserlabeldialogVisible = false
     },
-    // 单击模态框的确认
+    // 单击模态框的确认:只有在确认的时候，才真正的将临时数组中的数据添加到原始数据对象 
     confirmTagSelectHandler () {
       this.userLabelNames = [...this.userLabelNames, ...this.userLabelNamesTemp]
-      console.log(this.userLabelNames);
-
 
       this.addUserForm.label_id = [...this.addUserForm.label_id, ...this.label_idTemp]
       this.UserlabeldialogVisible = false
-
 
       this.userLabelNamesTemp = []
       this.label_idTemp = []
@@ -246,6 +246,8 @@ export default {
     // 单击标签下拉列表，切换选项的显示和隐藏时触发
     tagSelectVisibleHandler () {
       this.UserlabeldialogVisible = true
+      // 将样式重置为none
+      document.documentElement.style.setProperty('--dropdownshow', 'none');
     },
 
 
@@ -254,11 +256,14 @@ export default {
     },
     async getUserLevel () {
       let res = await getUserLevelHandler()
+
       this.userLevelList = res.data.data.list
       this.addUserForm.level = this.userLevelList[0].id
     },
     async getUserGroup () {
       let res = await getUserGroupHandler()
+      console.log(res);
+
       this.userGroupList = res.data.data.list
       this.addUserForm.group_id = this.userGroupList[0].id
     },
@@ -280,6 +285,15 @@ export default {
   }
 }
 </script>
+<style>
+:root {
+  --dropdownshow: block;
+}
+.el-select-dropdown {
+  display: var(--dropdownshow);
+}
+</style>
+
 <style lang="less" scoped>
 .el-tag {
   cursor: pointer;
