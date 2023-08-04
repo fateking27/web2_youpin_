@@ -1,6 +1,6 @@
 <template>
   <el-submenu :index="index">
-    <template slot="title"><i class="el-icon-message"></i>{{ subLabel }}</template>
+    <template slot="title"><i class="el-icon-user-solid"></i>{{ subLabel }}</template>
     <template v-for="(subItem, subIndex) in list">
       <template v-if=" subItem.children && subItem.children.length">
         <!--  组件自身递归调用      -->
@@ -22,7 +22,11 @@
 </template>
 
 <script>
+
 export default {
+  // 设置名字的作用有
+  // 实现组件递归
+  // 方便调试
   name: 'sideMenuItem',
   props: {
     list: {

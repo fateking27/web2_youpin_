@@ -12,7 +12,8 @@ const store = new Vuex.Store({
     breadCrumbTitle: [],
     // 当前登陆用户信息
     userInfo: {},
-    token: ''
+    token: '',
+    userData:{}
   },
   mutations: {
     // 更新路径导航的值
@@ -26,6 +27,9 @@ const store = new Vuex.Store({
     // 存储token
     updateToken(state, token) {
       state.token = token
+    },
+    updateUserData(state,data){
+      state.userData = data
     }
   },
   // 解决刷新数据丢失的问题

@@ -71,7 +71,8 @@ const router = new VueRouter({
           component: () => import('@/views/user/usergroup.vue'),
           meta: {
             needAuth: true,
-            title: '用户分组'
+            title: '用户分组',
+            unique_auth:'user-user-group'
           }
         },
         {

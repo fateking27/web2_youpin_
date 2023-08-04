@@ -27,6 +27,10 @@
       <el-table-column prop="roles"
                        label="身份"
                        width="180">
+        <template v-slot="scoped">
+          <el-tag type='primary'
+                  v-for='item in scoped.row.roles.split(",")'>{{item}}</el-tag>
+        </template>
       </el-table-column>
       <el-table-column :show-overflow-tooltip="true"
                        prop="_last_time"
