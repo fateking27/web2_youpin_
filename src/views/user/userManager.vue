@@ -98,7 +98,7 @@
           <template slot-scope="scope">
             <el-button type="text"
                        size="small"
-                       @click='$router.push(`useredit/${scope.row.uid}`)'>编辑</el-button>
+                       @click='$router.push(`/admin/user/useredit/${scope.row.uid}`)'>编辑</el-button>
             <el-dropdown>
               <span class="el-dropdown-link">
                 更多<i class="el-icon-arrow-down el-icon--right"></i>

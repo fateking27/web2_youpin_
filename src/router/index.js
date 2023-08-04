@@ -24,22 +24,28 @@ const router = new VueRouter({
       component: () => import('@/views/home/index.vue'),
       meta: {
         needAuth: true,
-        title: '后台首页'
+        title: '后台首页',
+        meta: {
+          needAuth: true,
+          title: '后台首页',
+          uniqueAuth: 'admin-index-index'
+        }
       },
-      redirect: '/admin/dashboard',
+      redirect: '/admin/home',
       // 添加嵌套路由
       children: [
         {
-          path: 'dashboard',
+          path: 'home',
           name: 'dashboard',
           component: () => import('@/views/dashboard/index.vue'),
           meta: {
             needAuth: true,
-            title: '后台图表页'
+            title: '后台图表页',
+            uniqueAuth: 'admin-index-index'
           }
         },
         {
-          path: 'manager',
+          path: 'user/list',
           name: 'manager',
           component: () => import('@/views/user/userManager.vue'),
           meta: {
@@ -48,7 +54,7 @@ const router = new VueRouter({
           }
         },
         {
-          path: 'useradd',
+          path: 'user/useradd',
           name: 'useradd',
           component: () => import('@/views/user/userAdd.vue'),
           meta: {
@@ -57,7 +63,7 @@ const router = new VueRouter({
           }
         },
         {
-          path: 'useredit/:id',
+          path: 'user/useredit/:id',
           name: 'useredit',
           component: () => import('@/views/user/userAdd.vue'),
           meta: {
@@ -66,17 +72,17 @@ const router = new VueRouter({
           }
         },
         {
-          path: 'group',
+          path: 'user/group',
           name: 'group',
           component: () => import('@/views/user/usergroup.vue'),
           meta: {
             needAuth: true,
             title: '用户分组',
-            unique_auth:'user-user-group'
+            uniqueAuth: 'user-user-group'
           }
         },
         {
-          path: 'usertag',
+          path: 'user/label',
           name: 'usertag',
           component: () => import('@/views/user/usertag.vue'),
           meta: {
@@ -85,7 +91,7 @@ const router = new VueRouter({
           }
         },
         {
-          path: 'userlevel',
+          path: 'user/level',
           name: 'userlevel',
           component: () => import('@/views/user/userlevel.vue'),
           meta: {
@@ -108,7 +114,8 @@ const router = new VueRouter({
           component: () => import('@/views/role/roleList.vue'),
           meta: {
             needAuth: true,
-            title: '角色管理'
+            title: '角色管理',
+            uniqueAuth: 'setting-system-role'
           }
         },
         {
@@ -117,7 +124,8 @@ const router = new VueRouter({
           component: () => import('@/views/role/roleRules.vue'),
           meta: {
             needAuth: true,
-            title: '权限规则'
+            title: '权限规则',
+            uniqueAuth: 'setting-system-menus'
           }
         },
         {
@@ -126,27 +134,40 @@ const router = new VueRouter({
           component: () => import('@/views/role/managerList.vue'),
           meta: {
             needAuth: true,
-            title: '管理员列表'
+            title: '管理员列表',
+            uniqueAuth: 'setting-system-list'
           }
         }
       ]
+    },
+    {
+      path: '/404',
+      component: () => import('@/views/404.vue')
     }
   ]
 })
 
 // 导航守卫
 router.beforeEach((to, from, next) => {
+  console.log(to)
+
   // 如果是不需要校验的路由，直接next
   if (!to.meta.needAuth) {
     next()
   }
   // 否则，判断是否有token,如果有则next(),否则重定向到登陆页
   else {
-    let token = store.state.token
-    if (token) {
-      next()
+    let uniqueAuth = to.meta.uniqueAuth
+    // 是否有跳转的权限
+    if (store.state.userData.unique_auth.indexOf(uniqueAuth) != -1) {
+      let token = store.state.token
+      if (token) {
+        next()
+      } else {
+        next('/login?rediretURL=' + to.fullPath)
+      }
     } else {
-      next('/login?rediretURL=' + to.fullPath)
+      next('/404')
     }
   }
 })
