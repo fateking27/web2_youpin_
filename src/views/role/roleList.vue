@@ -128,7 +128,7 @@ export default {
         checked_menus: [],
         // 编辑还需要的两个参数
         level: '',
-        rules: []
+        rules: ''
       },
       rightList: [],
       defaultCheckedIdsArr: [],
@@ -166,16 +166,12 @@ export default {
         delete this.roleForm.level
         delete this.roleForm.rules
       }
-
       res = await storeRoleHandler(this.roleForm)
-
-
       this.addRoledialogFormVisible = false
       this.$message.success('操作成功')
       this.getRoleList()
       // 清空
       this.roleForm = {}
-
     },
     handleSizeChange (val) {
       this.pageSize = val

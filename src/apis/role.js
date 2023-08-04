@@ -33,3 +33,19 @@ export const getRoleByIdHandler = function(id) {
     url: `/setting/role/${id}/edit`
   })
 }
+
+// 管理员列表数据
+export const getAdminListHandler = function(id) {
+  return instance({
+    method: 'get',
+    url: `/setting/admin`
+  })
+}
+
+// 管理员状态修改
+export const updateAdminStatuHandler = function(id,status) {
+  return instance({
+    method: 'put',
+    url: `/setting/set_status/${id}/${status}`
+  })
+}
