@@ -31,12 +31,12 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   function(response) {
     // console.log('response---', response)
-    // if (response.data.status == 110003) {
-    //   // 提示
-    //   Message.warning('未登陆，请先登陆')
-    //   // 重定向到登陆
-    //   router.push('/login')
-    // }
+    if (response.data.status == 110003) {
+      // 提示
+      Message.warning('未登陆，请先登陆')
+      // 重定向到登陆
+      router.push('/login')
+    }
 
     // 对响应数据做点什么
     return response
