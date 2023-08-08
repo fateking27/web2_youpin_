@@ -5,13 +5,13 @@
       <template v-if=" subItem.children && subItem.children.length">
         <!--  组件自身递归调用      -->
         <sideMenuItem :index="`${index}-${subIndex}`"
-                      :key="`${index}-${subIndex}`"
+                      :key="subItem.path"
                       :list="subItem.children"
                       :sub-label="subItem.title" />
       </template>
       <template v-else>
-        <el-menu-item :index="`${index}-${subIndex}`"
-                      :key="`${index}-${subIndex}`"
+        <el-menu-item :index="subItem.path"
+                      :key="subItem.path"
                       @click="handleClick(subItem)">
           <i class="el-icon-s-tools"></i>
           <span slot="title">{{ subItem.title }}</span>

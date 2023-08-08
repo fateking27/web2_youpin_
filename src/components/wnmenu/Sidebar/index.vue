@@ -2,16 +2,17 @@
   <div class="side-menu-wrapper">
     <el-aside width="100%">
       <el-menu :default-openeds="defaultOpends"
-               :default-active="defaultActive">
+               :default-active="getCurPath"
+               @select="selectMenu">
         <template v-for="(item, index) in sideDate">
           <template v-if="item.children && item.children.length">
             <SideMenuItem :key="index"
                           :list="item.children"
-                          :index="String(index)"
+                          :index="item.path"
                           :sub-label="item.title" />
           </template>
           <template v-else>
-            <el-menu-item :index="String(index)"
+            <el-menu-item :index="item.path"
                           :key="index"
                           @click="handleClick(item)">
               <i class="el-icon-circle-plus"></i>
@@ -26,6 +27,7 @@
 
 <script>
 import SideMenuItem from './SideMenuItem.vue'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'index',
@@ -47,6 +49,28 @@ export default {
       default: '0-0'
     }
   },
+  data () {
+    return {
+      menu: {}
+    }
+  },
+  computed: {
+    ...mapGetters(["getCurPath", 'getListTag'])
+  },
+  watch: {
+    $route: {
+      handler (to) {
+        this.menu = {
+          path: to.path,
+          name: to.meta.title,
+          isChecked: true
+        }
+        console.log('index--', this.menu);
+      },
+      deep: true,
+      immediate: true
+    }
+  },
   methods: {
     handleClick (item) {
       if (item.path === this.$route.path) {
@@ -54,9 +78,14 @@ export default {
       }
       console.log(item.path);
 
-      // this.$router.push({
-      //   path: item.path
-      // })
+    },
+    selectMenu (index, indexPath) {
+
+      // console.log(index, indexPath, "aaa", menu);
+      setTimeout(() => {
+        console.log('okokok');
+        this.$store.commit("PUSH_TAG", this.menu);
+      }, 100);
     }
   }
 }

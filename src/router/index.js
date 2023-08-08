@@ -150,26 +150,27 @@ const router = new VueRouter({
 // 导航守卫
 router.beforeEach((to, from, next) => {
   console.log(to)
+  next()
 
   // 如果是不需要校验的路由，直接next
-  if (!to.meta.needAuth) {
-    next()
-  }
-  // 否则，判断是否有token,如果有则next(),否则重定向到登陆页
-  else {
-    let uniqueAuth = to.meta.uniqueAuth
-    // 是否有跳转的权限
-    if (store.state.userData.unique_auth.indexOf(uniqueAuth) != -1) {
-      let token = store.state.token
-      if (token) {
-        next()
-      } else {
-        next('/login?rediretURL=' + to.fullPath)
-      }
-    } else {
-      next('/404')
-    }
-  }
+  // if (!to.meta.needAuth) {
+  //   next()
+  // }
+  // // 否则，判断是否有token,如果有则next(),否则重定向到登陆页
+  // else {
+  //   let uniqueAuth = to.meta.uniqueAuth
+  //   // 是否有跳转的权限
+  //   if (store.state.userData.unique_auth.indexOf(uniqueAuth) != -1) {
+  //     let token = store.state.token
+  //     if (token) {
+  //       next()
+  //     } else {
+  //       next('/login?rediretURL=' + to.fullPath)
+  //     }
+  //   } else {
+  //     next('/404')
+  //   }
+  // }
 })
 
 // 添加导航的后置守卫:路由跳转已经完成了再进行触发
