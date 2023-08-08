@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { instance } from '@/utils/request.js'
 
 // 这个文件主要进行用户数据的相关操作
@@ -8,22 +7,10 @@ export const userLogin = function(data) {
   return instance({
     method: 'post',
     url: '/login',
-=======
-// 这个文件实现用户数据的  增加删除修改和查询
-// import { instance } from '@/utils/request.js'
-import axios from '@/utils/request.js'
-
-// 登陆
-export const userLoginApi = function(data){
-  return axios({
-    url: '/member/login',
-    method: 'post',
->>>>>>> 674169c3e9314439c3169a29254e4895bc022a1b
     data
   })
 }
 
-<<<<<<< HEAD
 // 获取所有用户数据
 export const getUserListHandler = function(params) {
   return instance({
@@ -82,13 +69,3 @@ export const editUserHandler = function(data) {
     data
   })
 }
-=======
-
-export const getUserListApi = function(data){
-  return axios({
-    url: '/member/login',
-    method: 'post',
-    data
-  })
-}
->>>>>>> 674169c3e9314439c3169a29254e4895bc022a1b
